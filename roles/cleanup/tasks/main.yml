@@ -3,7 +3,7 @@
 - name: Check if packages need to be autoremoved
   command: apt-get --dry-run autoremove
   register: check_autoremove
-  changed_when: False
+  changed_when: check_autoremove.rc != 0
   sudo: true
 
 - name: Autoremove unused packages
