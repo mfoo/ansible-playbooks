@@ -11,16 +11,21 @@ before_install:
 install:
   - pip install ansible
 
+before_script:
+  # Generate an ansible hosts file. Check the groups in bootstrap.yml and add localhost to each.
+  - grep 'hosts' bootstrap.yml | sed 's/.*: \(.*$\)/\1/g' | sort -u | sed "s/\(.*\)/\[\1\]\rlocalhost/g" > inventory
+
+
 script:
   # Check syntax
-  - ansible-playbook -i "localhost," bootstrap.yml --syntax-check
+  - ansible-playbook -i inventory bootstrap.yml --syntax-check
 
   # Check playbook execution
-  - ansible-playbook -i "localhost," bootstrap.yml --connection=local --sudo
+  - ansible-playbook -i inventory bootstrap.yml --connection=local --sudo
 
   # Check playbook idempotence
   - >
-    ansible-playbook -i "localhost," bootstrap.yml --connection=local --sudo
+    ansible-playbook -i inventory bootstrap.yml --connection=local --sudo
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
