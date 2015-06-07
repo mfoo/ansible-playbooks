@@ -1,5 +1,0 @@
----
-
-- name: Upgrade out-of-date packages
-  shell: apt-get upgrade -y
-  sudo: true

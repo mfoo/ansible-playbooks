@@ -15,5 +15,4 @@
 
 - hosts: all
   roles:
-    - role: package-upgrade
     - role: cleanup
