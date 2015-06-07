@@ -43,7 +43,7 @@
   register: dotfiles
 
 - name: Find and delete conflicting dotfiles that are not symlinks
-  shell: "find ~/ -maxdepth 1 -name {{ item | regex_replace('repositories/dotfiles/', '') }} -type f
+  shell: "find ~/ -maxdepth 1 -name {{ item | regex_replace('.*/dotfiles/', '') }} -type f
           -delete"
   with_items: dotfiles.stdout_lines
   when: dotfiles_repo.changed
@@ -51,7 +51,7 @@
 - name: Symlink all dotfiles into ~/
   file:
     src: "{{ item }}"
-    dest: "{{ item | regex_replace('repositories/dotfiles/', '') }}"
+    dest: "{{ item | regex_replace('.*/dotfiles/', '') }}"
     state: link
   with_items: dotfiles.stdout_lines
   when: dotfiles_repo.changed
