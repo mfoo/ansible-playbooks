@@ -19,9 +19,9 @@
   sudo: yes
 
 - name: Install ag
-apt:
-  pkg: silversearcher-ag
-  state: installed
+  apt:
+    pkg: silversearcher-ag
+    state: installed
   sudo: true
   when: ansible_distribution == 'Debian' or (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int > 12)
 
