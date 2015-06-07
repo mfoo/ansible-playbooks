@@ -16,21 +16,8 @@
     - irssi
     - sshfs
     - unzip
+    - unrar-free
   sudo: yes
-
-- name: Install unrar (Ubuntu)
-  apt:
-    pkg: unrar
-    state: installed
-  sudo: true
-  when: ansible_os_family == 'Ubuntu'
-
-- name: Install unrar (Debian)
-  apt:
-    pkg: unrar-free
-    state: installed
-  sudo: true
-  when: ansible_os_family == 'Debian'
 
 - name: Clone my dotfiles repository
   git:
