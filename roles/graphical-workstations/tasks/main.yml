@@ -1,0 +1,79 @@
+---
+
+- name: Remove all of the unnecessary packages that come with Debian and Ubuntu
+  apt:
+    pkg: "{{ item }}"
+    state: absent
+  sudo: true
+  with_items:
+
+    # Games
+    - aisleriot
+    - four-in-a-row
+    - gnome-chess
+    - gnome-games
+    - gnome-klotski
+    - gnome-mahjongg
+    - gnome-mines
+    - gnome-nibbles
+    - gnome-robots
+    - gnome-sudoku
+    - gnome-tetravex
+    - hitori
+    - iagno
+    - lightsoff
+    - quadrapassel
+    - swell-foop
+    - tali
+    - xboard
+
+    # Utilities
+    - iceweasel
+    - bluez
+    - ppp
+    - gnome-orca
+    - gnome-accessibility-themes
+    - vino
+    - espeak-data
+    - libespeak1
+    - icedove
+    - thunderbird
+    - totem
+    - totem-common
+    - totem-plugins
+    - rhythmbox
+    - transmission-gtk
+
+- name: Install useful graphical software
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    #- firefox
+    - keepassx
+    - rxvt-unicode-256color
+    - gimp
+    - dia
+
+    # Commandline software, still useful
+    - mpd
+    - ncmpcpp
+  sudo: true
+
+- name: Add the Dropbox package signing key to apt
+  apt_key:
+    keyserver: pgp.mit.edu
+    id: 5044912E
+  sudo: true
+
+- name: Add the Dropbox repository
+  apt_repository:
+    repo: "deb http://linux.dropbox.com/{{ ansible_distribution.lower() }} {{ ansible_distribution_release }} main"
+    state: present
+  sudo: true
+
+- name: Install dropbox
+  apt:
+    pkg: dropbox
+    state: installed
+  sudo: true

@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  roles:
+  - role: common
+
+- hosts: graphical-workstations
+  roles:
+  - role: graphical-workstations
+
+- hosts: development-machines
+  roles:
+  - role: development-common
+  - role: docker
+
+- hosts: all
+  roles:
+    - role: package-upgrade
+    - role: cleanup

@@ -1,0 +1,20 @@
+---
+
+- name: Add Docker key to apt
+  apt_key:
+    keyserver: hkp://p80.pool.sks-keyservers.net
+    id: 36A1D7869245C8950F966E92D8576A8BA88D21E9
+  sudo: true
+
+- name: Add Docker repository to apt
+  apt_repository:
+    repo: deb https://get.docker.com/ubuntu docker main
+    state: present
+  sudo: true
+
+- name: Install Docker
+  apt:
+    pkg: lxc-docker
+    state: installed
+    update_cache: yes
+  sudo: true

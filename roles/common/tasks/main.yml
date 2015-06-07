@@ -1,0 +1,75 @@
+---
+
+- name: Install essential packages
+  apt:
+    pkg: "{{ item }}"
+    state: installed
+  with_items:
+    - vim
+    - git
+    - tmux
+    - wget
+    - silversearcher-ag
+    - htop
+    - zsh
+    - apt-transport-https
+    - irssi
+    - sshfs
+    - unzip
+  sudo: yes
+
+- name: Install unrar (Ubuntu)
+  apt:
+    pkg: unrar
+    state: installed
+  sudo: true
+  when: ansible_os_family == 'Ubuntu'
+
+- name: Install unrar (Debian)
+  apt:
+    pkg: unrar-free
+    state: installed
+  sudo: true
+  when: ansible_os_family == 'Debian'
+
+- name: Clone my dotfiles repository
+  git:
+    repo: git@github.com:mfoo/dotfiles.git
+    dest: ~/repositories/dotfiles
+    accept_hostkey: yes
+  register: dotfiles_repo
+
+- name: Clone the gmarik/Vundle repository
+  git:
+    repo: https://github.com/gmarik/Vundle.vim.git
+    dest: ~/repositories/dotfiles/.vim/bundle/Vundle.vim
+
+- name: Find all dotfiles
+  shell: "find repositories/dotfiles -name '.*' ! -path '.git' -maxdepth 1"
+  when: dotfiles_repo.changed
+  register: dotfiles
+
+- name: Find and delete conflicting dotfiles that are not symlinks
+  shell: "find . -maxdepth 1 -name {{ item | regex_replace('^repositories/dotfiles/', '') }} -type f
+          -delete"
+  with_items: dotfiles.stdout_lines
+  when: dotfiles_repo.changed
+
+- name: Symlink all dotfiles into ~/
+  file:
+    src: "{{ item }}"
+    dest: "{{ item | regex_replace('^repositories/dotfiles/', '') }}"
+    state: link
+  with_items: dotfiles.stdout_lines
+  when: dotfiles_repo.changed
+
+- name: Set my default shell to zsh
+  user:
+    name: martin
+    shell: /usr/bin/zsh
+  sudo: yes
+
+- name: Clone oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: ~/.oh-my-zsh
