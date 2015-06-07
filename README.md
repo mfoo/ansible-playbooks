@@ -16,7 +16,6 @@ Current roles are as follows:
 
 * **common** - Applies to all machines. Installs my dotfiles and essential tools. Sets my shell to
   ZSH.
-* **commandline-workstation** - Installs command-line tools that I regularly use.
 * **graphical-workstation** - Installs graphical tools that I regularly use. Removes useless /
   unused tools that come with default installations.
 * **development-common** - I'm a software developer. This role installs software-development tools.
@@ -43,10 +42,6 @@ like this:
 
 ```
 [graphical-workstations]
-192.168.0.18
-192.168.0.16
-
-[commandline-workstations]
 192.168.0.18
 192.168.0.16
 
