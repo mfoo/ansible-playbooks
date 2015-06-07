@@ -38,7 +38,7 @@
     dest: ~/repositories/dotfiles/.vim/bundle/Vundle.vim
 
 - name: Find all dotfiles
-  shell: "find ~/repositories/dotfiles -name '.*' ! -path '.git' -maxdepth 1"
+  shell: "find ~/repositories/dotfiles -name '.*' -not -name '.git' -maxdepth 1"
   when: dotfiles_repo.changed
   register: dotfiles
 
