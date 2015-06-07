@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mfoo/ansible-playbooks.svg)](https://travis-ci.org/mfoo/ansible-playbooks)
+
 This repository is a test repository for learning Ansible.
 
 TODO: If I like Ansible and everything's working fine, delete the above and replace it with the
