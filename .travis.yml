@@ -13,10 +13,10 @@ install:
 
 before_script:
   # Generate an ansible hosts file. Check the groups in bootstrap.yml and add localhost to each.
-  - pwd
-  - find .
-  - cd mfoo/ansible-playbooks && grep 'hosts' bootstrap.yml | sed 's/.*: \(.*$\)/\1/g' | sort -u | sed "s/\(.*\)/\[\1\]\rlocalhost/g" > inventory
-
+  - grep 'hosts' bootstrap.yml
+  - grep 'hosts' bootstrap.yml | sed 's/.*: \(.*$\)/\1/g'
+  - grep 'hosts' bootstrap.yml | sed 's/.*: \(.*$\)/\1/g' | sort -u | sed "s/\(.*\)/\[\1\]\rlocalhost/g"
+  - grep 'hosts' bootstrap.yml | sed 's/.*: \(.*$\)/\1/g' | sort -u | sed "s/\(.*\)/\[\1\]\rlocalhost/g" > inventory
 
 script:
   # Check syntax
