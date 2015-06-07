@@ -13,10 +13,11 @@ install:
 
 before_script:
   # Generate an ansible hosts file. Check the groups in bootstrap.yml and add localhost to each.
-  - grep 'hosts' bootstrap.yml
-  - grep 'hosts' bootstrap.yml | sed 's/.*: \(.*$\)/\1/g'
-  - grep 'hosts' bootstrap.yml | sed 's/.*: \(.*$\)/\1/g' | sort -u | sed "s/\(.*\)/\[\1\]\rlocalhost/g"
-  - grep 'hosts' bootstrap.yml | sed 's/.*: \(.*$\)/\1/g' | sort -u | sed "s/\(.*\)/\[\1\]\rlocalhost/g" > inventory
+  # The sed here is a bit ugly because if I use a colon in the command, Travis fails.
+  - grep hosts bootstrap.yml
+  - grep hosts bootstrap.yml | sed 's/- .* \(.*$\)/\1/g'
+  - grep hosts bootstrap.yml | sed 's/- .* \(.*$\)/\1/g' | sort -u | sed "s/\(.*\)/\[\1\]\rlocalhost/g"
+  - grep hosts bootstrap.yml | sed 's/- .* \(.*$\)/\1/g' | sort -u | sed "s/\(.*\)/\[\1\]\rlocalhost/g" > inventory
 
 script:
   # Check syntax
