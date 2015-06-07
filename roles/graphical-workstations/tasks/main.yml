@@ -28,7 +28,6 @@
     - xboard
 
     # Utilities
-    - iceweasel
     - bluez
     - ppp
     - gnome-orca
@@ -49,7 +48,6 @@
     pkg: "{{ item }}"
     state: present
   with_items:
-    #- firefox
     - keepassx
     - rxvt-unicode-256color
     - gimp
@@ -77,3 +75,32 @@
     pkg: dropbox
     state: installed
   sudo: true
+
+- name: Install Firefox (Ubuntu)
+  apt:
+    pkg: firefox
+    state: installed
+  sudo: true
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Add the Mozilla Debian Team's apt repo GPG key (Debian)
+  apt:
+    pkg: pkg-mozilla-archive-keyring
+    state: installed
+  when: ansible_distribution == 'Debian'
+  sudo: true
+
+- name: Install Mozilla Debian Team's backports repo
+  apt_repository:
+    repo: deb http://mozilla.debian.net/ jessie-backports iceweasel-release
+    state: present
+  when: ansible_distribution == 'Debian'
+  sudo: true
+
+- name: Install latest version of Iceweasel (Debian)
+  apt:
+    pkg: iceweasel
+    state: latest
+  when: ansible_distribution == 'Debian'
+  sudo: true
+
