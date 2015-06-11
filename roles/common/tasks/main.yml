@@ -16,6 +16,8 @@
     - sshfs
     - unzip
     - unrar-free
+    - htop
+    - iptraf
   sudo: yes
 
 - name: Install ag
@@ -27,7 +29,7 @@
 
 - name: Clone my dotfiles repository
   git:
-    repo: https://github.com/mfoo/dotfiles.git
+    repo: git@github.com:mfoo/dotfiles.git
     dest: ~/repositories/dotfiles
     accept_hostkey: yes
   register: dotfiles_repo
