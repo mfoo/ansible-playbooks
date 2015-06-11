@@ -16,5 +16,4 @@
   apt:
     pkg: lxc-docker
     state: installed
-    update_cache: yes
   sudo: true
