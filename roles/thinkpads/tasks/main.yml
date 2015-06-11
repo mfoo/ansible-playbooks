@@ -1,0 +1,13 @@
+- name: Install the Debian non-free repository
+  apt_repository:
+    repo: deb http://ftp.uk.debian.org/debian/ jessie non-free
+    state: present
+  sudo: true
+  when: ansible_distribution == 'Debian'
+
+- name: Install the Realtek wireless driver
+  apt:
+    pkg: firmware-realtek
+    state: present
+  sudo: true
+  when: ansible_distribution == 'Debian'

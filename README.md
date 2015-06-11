@@ -24,6 +24,8 @@ Current roles are as follows:
 * **docker** - Installs [Docker](https://www.docker.com/).
 * **cleanup** - Cleans up any packages that were installed as dependencies but their dependent is
   now removed. Happens as the last part of the bootstrap playbook.
+* **thinkpads** - Installs hardware drivers and support software for Lenovo Thinkpads Only tested
+  on a Thinkpad X220.
 
 ## Getting Started
 
