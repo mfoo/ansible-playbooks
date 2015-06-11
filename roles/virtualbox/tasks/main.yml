@@ -1,0 +1,20 @@
+---
+
+- name: Enable the Jessie contrib repository
+  apt_repository:
+    repo: deb http://http.debian.net/debian/ jessie main contrib
+    state: present
+  sudo: true
+  when: ansible_distribution == 'Debian'
+
+- name: Install Virtualbox
+  apt:
+    pkg: virtualbox
+    state: present
+  sudo: true
+
+- name: Install Vagrant
+  apt:
+    pkg: vagrant
+    state: present
+  sudo: true

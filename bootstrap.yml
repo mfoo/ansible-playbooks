@@ -10,6 +10,7 @@
 
 - hosts: development-machines
   roles:
+  - role: virtualbox
   - role: development-common
   - role: docker
 
