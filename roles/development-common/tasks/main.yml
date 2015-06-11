@@ -16,3 +16,14 @@
     - meld
     - gdb
     - cloc
+    - python-dev
+    - python-pip
+    - bison
+    - flex
+    - doxygen
+
+- name: Upgrade pip with pip
+  pip:
+    name: pip
+    state: latest
+  sudo: true
