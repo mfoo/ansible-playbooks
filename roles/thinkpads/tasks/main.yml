@@ -11,3 +11,8 @@
     state: present
   sudo: true
   when: ansible_distribution == 'Debian'
+
+- name: Enable the thinkpad scroll wheel
+  template:
+    src: xorg.conf
+    dest: /usr/share/X11/xorg.conf.d/20-thinkpad.conf
