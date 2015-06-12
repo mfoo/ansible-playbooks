@@ -27,12 +27,21 @@
   sudo: true
   when: ansible_distribution == 'Debian' or (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int > 12)
 
-- name: Clone my dotfiles repository
+- name: Clone my dotfiles repository (SSH)
   git:
     repo: git@github.com:mfoo/dotfiles.git
     dest: ~/repositories/dotfiles
     accept_hostkey: yes
   register: dotfiles_repo
+  when: lookup('env','TRAVIS') is not defined
+
+- name: Clone my dotfiles repository (HTTPS)
+  git:
+    repo: https://github.com/mfoo/dotfiles.git
+    dest: ~/repositories/dotfiles
+    accept_hostkey: yes
+  register: dotfiles_repo
+  when: lookup('env','TRAVIS')
 
 - name: Clone the gmarik/Vundle repository
   git:
