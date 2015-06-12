@@ -1,0 +1,25 @@
+---
+
+- name: install openjdk 7
+  apt:
+    pkg: openjdk-7-jdk
+    state: installed
+  sudo: true
+
+- name: Install the apt key
+  apt_key:
+    url: https://jenkins-ci.org/debian/jenkins-ci.org.key
+    state: present
+  sudo: true
+
+- name: Install the Jenkins repository
+  apt_repository:
+    repo: deb http://pkg.jenkins-ci.org/debian binary/
+    state: present
+  sudo: true
+
+- name: Install the Jenkins package
+  apt:
+    pkg: jenkins
+    state: present
+  sudo: true

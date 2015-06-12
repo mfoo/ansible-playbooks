@@ -13,6 +13,7 @@
   - role: virtualbox
   - role: development-common
   - role: docker
+  - role: jenkins-server
 
 - hosts: all
   roles:
