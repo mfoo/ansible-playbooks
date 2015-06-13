@@ -41,7 +41,6 @@
     - totem-common
     - totem-plugins
     - rhythmbox
-    - transmission-gtk
 
 - name: Install useful graphical software
   apt:
@@ -52,6 +51,7 @@
     - rxvt-unicode-256color
     - gimp
     - dia
+    - transmission-gtk
 
     # Commandline software, still useful
     - mpd
