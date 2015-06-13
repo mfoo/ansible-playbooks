@@ -12,6 +12,7 @@
   roles:
   - role: virtualbox
   - role: development-common
+  - role: development-php
   - role: docker
   - role: jenkins-server
 
