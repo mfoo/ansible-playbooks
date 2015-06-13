@@ -16,3 +16,13 @@
   template:
     src: xorg.conf
     dest: /usr/share/X11/xorg.conf.d/20-thinkpad.conf
+
+- name: Install VPN software
+  apt:
+    pkg: {{ item }}
+    state: installed
+  with_items:
+    - network-manager-vpnc
+    - network-manager-vpnc-gnome
+    - rdesktop
+  sudo: true
