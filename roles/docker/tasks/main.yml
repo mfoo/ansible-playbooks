@@ -17,3 +17,16 @@
     pkg: lxc-docker
     state: installed
   sudo: true
+
+- name: Add myself to the Docker group
+  user:
+    name: martin
+    groups: docker
+    append: yes
+  sudo: true
+
+- name: Install Docker Compose
+  pip:
+    name: docker-compose
+    state: installed
+  sudo: true
