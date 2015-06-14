@@ -6,6 +6,12 @@
     state: installed
   sudo: true
 
+- name: Ensure mysql is running
+  service:
+    name: mysql
+    state: started
+  sudo: true
+
 - name: Install the mysqldb python module
   apt:
     pkg: python-mysqldb
