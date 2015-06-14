@@ -10,12 +10,13 @@
 
 - hosts: development-machines
   roles:
-  - role: virtualbox
   - role: development-common
-  - role: development-php
   - role: development-java
+  - role: development-php
   - role: docker
   - role: jenkins-server
+  - role: mysql
+  - role: virtualbox
 
 - hosts: all
   roles:

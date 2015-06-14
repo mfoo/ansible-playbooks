@@ -1,0 +1,29 @@
+---
+
+- name: Install mysql server
+  apt:
+    pkg: mysql-server
+    state: installed
+  sudo: true
+
+- name: Install the mysqldb python module
+  apt:
+    pkg: python-mysqldb
+    state: installed
+  sudo: true
+
+- name: Set the MySQL root password to 'password'
+  # This is a development machine and nothing important is stored here
+  mysql_user:
+    check_implicit_admin: true
+    login_user: root
+    login_password: 'password'
+    name: root
+    password: 'password'
+    state: present
+
+- name: Install mysql client
+  apt:
+    pkg: mysql-client
+    state: installed
+  sudo: true
