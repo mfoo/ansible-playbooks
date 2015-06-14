@@ -1,5 +1,29 @@
 ---
 
+- name: Add the Dropbox package signing key to apt
+  apt_key:
+    keyserver: pgp.mit.edu
+    id: 5044912E
+  sudo: true
+
+- name: Add the Dropbox repository
+  apt_repository:
+    repo: "deb http://linux.dropbox.com/{{ ansible_distribution.lower() }} {{ ansible_distribution_release }} main"
+    state: present
+  sudo: true
+
+- name: Add the Spotify package signing key to apt
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 94558F59
+  sudo: true
+
+- name: Add the spotify repository
+  apt_repository:
+    repo: "deb http://repository.spotify.com stable non-free"
+    state: present
+  sudo: true
+
 - name: Remove all of the unnecessary packages that come with Debian and Ubuntu
   apt:
     pkg: "{{ item }}"
@@ -47,33 +71,17 @@
     pkg: "{{ item }}"
     state: present
   with_items:
+    - dia
+    - dropbox
+    - gimp
     - keepassx
     - rxvt-unicode-256color
-    - gimp
-    - dia
+    - spotify-client
     - transmission-gtk
 
     # Commandline software, still useful
     - mpd
     - ncmpcpp
-  sudo: true
-
-- name: Add the Dropbox package signing key to apt
-  apt_key:
-    keyserver: pgp.mit.edu
-    id: 5044912E
-  sudo: true
-
-- name: Add the Dropbox repository
-  apt_repository:
-    repo: "deb http://linux.dropbox.com/{{ ansible_distribution.lower() }} {{ ansible_distribution_release }} main"
-    state: present
-  sudo: true
-
-- name: Install dropbox
-  apt:
-    pkg: dropbox
-    state: installed
   sudo: true
 
 - name: Install Firefox (Ubuntu)
@@ -103,4 +111,3 @@
     state: latest
   when: ansible_distribution == 'Debian'
   sudo: true
-
