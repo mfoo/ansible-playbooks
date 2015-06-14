@@ -1,0 +1,26 @@
+---
+
+- name: Check for Eclipse
+  stat:
+    path: ~/bin/eclipse
+  register: eclipse_directory
+
+- name: Download Eclipse Luna
+  get_url:
+    url: http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/luna/SR2/eclipse-java-luna-SR2-linux-gtk-x86_64.tar.gz&r=1
+    dest: /tmp/eclipse-luna.tar.gz
+  when: not eclipse_directory.stat.exists
+
+- name: Extract Eclipse Luna
+  unarchive:
+    src: /tmp/eclipse-luna.tar.gz
+    dest: ~/bin
+    copy: no
+  when: not eclipse_directory.stat.exists
+
+- name: Delete the downloaded Eclipse Luna archive
+  file:
+    path: /tmp/eclipse-luna.tar.gz
+    state: absent
+  when: not eclipse_directory.stat.exists
+
