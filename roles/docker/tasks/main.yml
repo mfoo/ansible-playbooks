@@ -28,5 +28,5 @@
 - name: Install Docker Compose
   pip:
     name: docker-compose
-    state: installed
+    state: present
   sudo: true
