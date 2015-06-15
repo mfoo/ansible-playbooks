@@ -19,7 +19,7 @@
 
 - name: Install VPN software
   apt:
-    pkg: {{ item }}
+    pkg: "{{ item }}"
     state: installed
   with_items:
     - network-manager-vpnc

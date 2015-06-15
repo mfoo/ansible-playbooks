@@ -18,6 +18,10 @@
   - role: mysql
   - role: virtualbox
 
+- hosts: thinkpads
+  roles:
+    - thinkpads
+
 - hosts: all
   roles:
     - role: cleanup
