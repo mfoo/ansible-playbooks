@@ -8,6 +8,10 @@
   roles:
   - role: graphical-workstations
 
+- hosts: games
+  roles:
+    - role: games
+
 - hosts: development-machines
   roles:
   - role: development-common
