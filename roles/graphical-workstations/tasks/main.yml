@@ -20,7 +20,7 @@
 
 - name: Add the spotify repository
   apt_repository:
-    repo: "deb http://repository.spotify.com stable non-free"
+    repo: "deb http://repository.spotify.com testing non-free"
     state: present
   sudo: true
 

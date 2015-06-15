@@ -5,6 +5,7 @@
     repo: deb http://http.debian.net/debian/ jessie main contrib non-free
     state: present
   sudo: true
+  when: ansible_distribution == 'Debian'
 
 - name: Check for 32 bit libraries
   command: dpkg --print-foreign-architectures
