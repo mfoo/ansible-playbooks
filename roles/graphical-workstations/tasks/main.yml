@@ -76,7 +76,6 @@
     - gimp
     - keepassx
     - rxvt-unicode-256color
-    - spotify-client
     - transmission-gtk
 
     # Commandline software, still useful
@@ -109,5 +108,12 @@
   apt:
     pkg: iceweasel
     state: latest
+  when: ansible_distribution == 'Debian'
+  sudo: true
+
+- name: Install the latest version of Spotify (Debian)
+  apt:
+    pkg: spotify-client
+    state: installed
   when: ansible_distribution == 'Debian'
   sudo: true
