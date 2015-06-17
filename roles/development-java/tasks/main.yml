@@ -24,3 +24,8 @@
     state: absent
   when: not eclipse_directory.stat.exists
 
+- name: Install Maven
+  apt:
+    pkg: maven
+    state: installed
+  sudo: true
