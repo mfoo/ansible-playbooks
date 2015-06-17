@@ -14,8 +14,9 @@
 
 - name: Enable the thinkpad scroll wheel
   template:
-    src: xorg.conf
+    src: xorg.conf.j2
     dest: /usr/share/X11/xorg.conf.d/20-thinkpad.conf
+  sudo: true
 
 - name: Install VPN software
   apt:
