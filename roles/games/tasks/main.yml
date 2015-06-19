@@ -7,22 +7,22 @@
   sudo: true
   when: ansible_distribution == 'Debian'
 
-- name: Check for 32 bit libraries
-  command: dpkg --print-foreign-architectures
-  register: check_32_bit_libraries
-
-- name: Enable 32 bit libraries
-  command: dpkg --add-architecture i386
-  sudo: true
-  when: check_32_bit_libraries.stdout.find('i386') == -1
-  register: enable_32_bit_libraries
-
-- name: Update apt after enabling 32 bit libraries
-  apt:
-    update_cache: true
-  when: enable_32_bit_libraries.changed
-  sudo: true
-
+#- name: Check for 32 bit libraries
+#  command: dpkg --print-foreign-architectures
+#  register: check_32_bit_libraries
+#
+#- name: Enable 32 bit libraries
+#  command: dpkg --add-architecture i386
+#  sudo: true
+#  when: check_32_bit_libraries.stdout.find('i386') == -1
+#  register: enable_32_bit_libraries
+#
+#- name: Update apt after enabling 32 bit libraries
+#  apt:
+#    update_cache: true
+#  when: enable_32_bit_libraries.changed
+#  sudo: true
+#
 # Ansible can't yet install steam because the pre_install script blows away any debconf selections.
 # See https://github.com/ValveSoftware/steam-for-linux/issues/3633
 #
