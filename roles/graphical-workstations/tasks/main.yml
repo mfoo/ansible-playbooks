@@ -12,6 +12,18 @@
     state: present
   sudo: true
 
+- name: Add the Google Chrome package signing key to apt
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: A040830F7FAC5991
+  sudo: true
+
+- name: Add the Google Chrome repository
+  apt_repository:
+    repo: "deb http://dl.google.com/linux/chrome/deb/ stable main"
+    state: present
+  sudo: true
+
 - name: Add the Spotify package signing key to apt
   apt_key:
     keyserver: keyserver.ubuntu.com
@@ -73,7 +85,9 @@
   with_items:
     - dia
     - dropbox
+    - eog
     - gimp
+    - google-chrome-stable
     - keepassx
     - rxvt-unicode-256color
     - transmission-gtk
