@@ -29,3 +29,44 @@
     pkg: maven
     state: installed
   sudo: true
+
+- name: Test for Java version
+  shell: java -version 2>&1 | head -n 1
+  register: java_version
+  changed_when: java_version.stdout.find('1.8.0_45') == -1
+
+- name: Download, extract, and prepare JDK8 from Oracle
+  shell: |
+    mkdir -p $JAVA_DIR
+    cd $JAVA_DIR
+    wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/$JDK_VERSION-b$BUILD_NUMBER/jdk-$JDK_VERSION-linux-x64.tar.gz
+    tar -zxf jdk-$JDK_VERSION-linux-x64.tar.gz
+    rm jdk-$JDK_VERSION-linux-x64.tar.gz
+
+    wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "https://edelivery.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"
+
+    unzip jce_policy-8.zip
+    rm jce_policy-8.zip
+    mv UnlimitedJCEPolicyJDK8/US_export_policy.jar $JDK_FOLDER/jre/lib/security
+    mv UnlimitedJCEPolicyJDK8/local_policy.jar $JDK_FOLDER/jre/lib/security
+    rm -rf UnlimitedJCEPolicyJDK8
+  environment:
+    JDK_VERSION: "8u45"
+    JDK_FOLDER: "jdk1.8.0_40"
+    BUILD_NUMBER: "14"
+    JAVA_DIR: "/tmp/java"
+    TARGET_JVM_DIR: "/usr/lib/jvm"
+  when: java_version.stdout.find('1.8.0_45') == -1
+  register: download_jdk8
+
+- name: Install downloaded JDK8
+  shell: |
+    mv /tmp/java/jdk1.8.0_45 /usr/lib/jvm/
+    rm -rf /usr/lib/jvm/default-java
+    ln -s /usr/lib/jvm/jdk1.8.0_45 /usr/lib/jvm/default-java
+    update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_45/bin/java 100
+    update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_45/bin/javac 100
+    update-alternatives --set java /usr/lib/jvm/jdk1.8.0_45/bin/java
+    update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_45/bin/javac
+  sudo: true
+  when: download_jdk8.changed
