@@ -18,6 +18,7 @@
     - unrar-free
     - htop
     - iptraf
+    - autojump
   sudo: yes
 
 - name: Install ag
