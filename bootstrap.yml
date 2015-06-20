@@ -17,10 +17,17 @@
   - role: development-common
   - role: development-java
   - role: development-php
+  - role: development-work
   - role: docker
   - role: jenkins-server
   - role: mysql
   - role: virtualbox
+  - role: rvm
+    sudo: true
+    rvm1_install_flags: '--auto-dotfiles --user-install'
+    rvm1_install_path: '/home/{{ansible_ssh_user}}/.rvm'
+    rvm1_rubies: 'ruby-2.1.5'
+    rvm1_user: martin
 
 - hosts: thinkpads
   roles:

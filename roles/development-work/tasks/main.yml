@@ -1,0 +1,33 @@
+---
+
+- name: Install dependencies
+  apt:
+    pkg: "{{ item }}"
+    state: installed
+  sudo: true
+  with_items:
+    # Gem dependencies
+  - libmysqlclient-dev
+  - libqt4-dev
+  - libsqlite3-dev
+  - libv8-dev
+  - libxslt-dev
+  - libxml2-dev
+
+    # C++
+  - libboost-all-dev
+  - libxerces-c3.1
+  - liblog4cplus-dev
+  - libxerces-c-dev
+  - swig
+  - libmysqlclient-dev
+  - libqtwebkit-dev
+  - gtk2-engines-pixbuf
+  - libxslt-dev
+  - libxml2-dev
+  - clang
+  - gdb
+  - valgrind
+
+    # Useful software
+  - redis-server
