@@ -1,10 +1,11 @@
 ---
 
-- name: install openjdk 7
-  apt:
-    pkg: openjdk-7-jdk
-    state: installed
-  sudo: true
+# TODO: The development-java role has Oracle's JDK8. Separate that out and require it hee.
+#- name: install openjdk 7
+#  apt:
+#    pkg: openjdk-7-jdk
+#    state: installed
+#  sudo: true
 
 - name: Install the apt key
   apt_key:
