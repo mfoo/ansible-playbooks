@@ -12,24 +12,28 @@
     url: https://jenkins-ci.org/debian/jenkins-ci.org.key
     state: present
   sudo: true
+  when: ansible_distribution == 'Debian'
 
 - name: Install the Jenkins repository
   apt_repository:
     repo: deb http://pkg.jenkins-ci.org/debian binary/
     state: present
   sudo: true
+  when: ansible_distribution == 'Debian'
 
 - name: Install the Jenkins package
   apt:
     pkg: jenkins
     state: present
   sudo: true
-
+  when: ansible_distribution == 'Debian'
+  
 - name: Add the Jenkins user to the Docker group
   user:
     name: jenkins
     groups: docker
     append: yes
   sudo: true
+  when: ansible_distribution == 'Debian'
 
 
