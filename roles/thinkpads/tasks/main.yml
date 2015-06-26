@@ -27,3 +27,13 @@
     - network-manager-vpnc-gnome
     - rdesktop
   sudo: true
+
+- name: Install CUPS for printing
+  apt:
+    pkg: "{{ item }}"
+    state: installed
+  with_items:
+    - cups
+    - cups-client
+  sudo: true
+
