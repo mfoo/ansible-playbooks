@@ -101,4 +101,5 @@
   when: powerline_fonts_repo.changed
 
 - name: Update the font cache
-  command: fc-cache -f ~/.fonts  when: powerline_fonts_repo.changed
+  command: fc-cache -f ~/.fonts
+  when: powerline_fonts_repo.changed
