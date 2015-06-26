@@ -84,3 +84,21 @@
     path: ~/bin
     state: directory
 
+- name: Ensure ~/.fonts exists
+  file:
+    path: ~/.fonts
+    state: directory
+
+- name: Clone the Powerline Fonts repository
+  git:
+    repo: https://github.com/powerline/fonts.git
+    dest: ~/repositories/powerline-fonts
+    accept_hostkey: yes
+  register: powerline_fonts_repo
+  
+- name: Copy the fonts to ~/.fonts
+  shell: find ~/repositories/powerline-fonts -type f -name '*.[o,t]tf' -exec mv {} ~/.fonts \;
+  when: powerline_fonts_repo.changed
+
+- name: Update the font cache
+  command: fc-cache -f ~/.fonts  when: powerline_fonts_repo.changed
