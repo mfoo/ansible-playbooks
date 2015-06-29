@@ -1,3 +1,4 @@
+
 ---
 
 - name: Install essential packages
@@ -95,9 +96,9 @@
     dest: ~/repositories/powerline-fonts
     accept_hostkey: yes
   register: powerline_fonts_repo
-  
+
 - name: Copy the fonts to ~/.fonts
-  shell: find ~/repositories/powerline-fonts -type f -name '*.[o,t]tf' -exec mv {} ~/.fonts \;
+  shell: find ~/repositories/powerline-fonts -type f -name '*.[o,t]tf' -exec cp {} ~/.fonts \;
   when: powerline_fonts_repo.changed
 
 - name: Update the font cache
