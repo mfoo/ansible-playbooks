@@ -28,6 +28,7 @@
     rvm1_install_path: '/home/{{ansible_ssh_user}}/.rvm'
     rvm1_rubies: 'ruby-2.1.5'
     rvm1_user: martin
+    rvm1_rvm_check_for_updates: false
 
 - hosts: thinkpads
   roles:
