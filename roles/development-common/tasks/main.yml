@@ -12,7 +12,7 @@
     - git
     - subversion
     - mercurial
-    - kdiff3
+    #- kdiff3
     - meld
     - gdb
     - cloc

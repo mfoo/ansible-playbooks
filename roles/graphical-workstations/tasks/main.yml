@@ -1,82 +1,40 @@
 ---
 
-- name: Add the Dropbox package signing key to apt
-  apt_key:
-    keyserver: pgp.mit.edu
-    id: 5044912E
-  sudo: true
-
-- name: Add the Dropbox repository
-  apt_repository:
-    repo: "deb http://linux.dropbox.com/{{ ansible_distribution.lower() }} {{ ansible_distribution_release }} main"
-    state: present
-  sudo: true
-
-- name: Add the Google Chrome package signing key to apt
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: A040830F7FAC5991
-  sudo: true
-
-- name: Add the Google Chrome repository
-  apt_repository:
-    repo: "deb http://dl.google.com/linux/chrome/deb/ stable main"
-    state: present
-  sudo: true
-
-- name: Add the Spotify package signing key to apt
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: 94558F59
-  sudo: true
-
-- name: Add the spotify repository
-  apt_repository:
-    repo: "deb http://repository.spotify.com testing non-free"
-    state: present
-  sudo: true
-
-- name: Remove all of the unnecessary packages that come with Debian and Ubuntu
-  apt:
-    pkg: "{{ item }}"
-    state: absent
-  sudo: true
-  with_items:
-
-    # Games
-    - aisleriot
-    - four-in-a-row
-    - gnome-chess
-    - gnome-games
-    - gnome-klotski
-    - gnome-mahjongg
-    - gnome-mines
-    - gnome-nibbles
-    - gnome-robots
-    - gnome-sudoku
-    - gnome-tetravex
-    - hitori
-    - iagno
-    - lightsoff
-    - quadrapassel
-    - swell-foop
-    - tali
-    - xboard
-
-    # Utilities
-    - bluez
-    - ppp
-    - gnome-orca
-    - gnome-accessibility-themes
-    - vino
-    - espeak-data
-    - libespeak1
-    - icedove
-    - thunderbird
-    - totem
-    - totem-common
-    - totem-plugins
-    - rhythmbox
+#- name: Add the Dropbox package signing key to apt
+#  apt_key:
+#    keyserver: pgp.mit.edu
+#    id: 5044912E
+#  sudo: true
+#
+#- name: Add the Dropbox repository
+#  apt_repository:
+#    repo: "deb http://linux.dropbox.com/{{ ansible_distribution.lower() }} {{ ansible_distribution_release }} main"
+#    state: present
+#  sudo: true
+#
+#- name: Add the Google Chrome package signing key to apt
+#  apt_key:
+#    keyserver: keyserver.ubuntu.com
+#    id: A040830F7FAC5991
+#  sudo: true
+#
+#- name: Add the Google Chrome repository
+#  apt_repository:
+#    repo: "deb http://dl.google.com/linux/chrome/deb/ stable main"
+#    state: present
+#  sudo: true
+#
+#- name: Add the Spotify package signing key to apt
+#  apt_key:
+#    keyserver: keyserver.ubuntu.com
+#    id: 94558F59
+#  sudo: true
+#
+#- name: Add the spotify repository
+#  apt_repository:
+#    repo: "deb http://repository.spotify.com testing non-free"
+#    state: present
+#  sudo: true
 
 - name: Install useful graphical software
   apt:
@@ -84,10 +42,10 @@
     state: present
   with_items:
     - dia
-    - dropbox
+    #- dropbox
     - eog
     - gimp
-    - google-chrome-stable
+    #- google-chrome-stable
     - keepassx
     - rxvt-unicode-256color
     - transmission-gtk

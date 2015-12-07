@@ -1,4 +1,3 @@
-
 ---
 
 - name: Install essential packages
@@ -21,7 +20,55 @@
     - htop
     - iptraf
     - autojump
+    - emacs
+    - fortune
+    - openssh-server
+    - atop
   sudo: yes
+
+- name: Remove all of the unnecessary packages that come with Debian and Ubuntu
+  apt:
+    pkg: "{{ item }}"
+    state: absent
+  sudo: true
+  with_items:
+    # Games
+    - aisleriot
+    - four-in-a-row
+    - gnome-chess
+    - gnome-games
+    - gnome-klotski
+    - gnome-mahjongg
+    - gnome-mines
+    - gnome-nibbles
+    - gnome-robots
+    - gnome-sudoku
+    - gnome-tetravex
+    - hitori
+    - iagno
+    - lightsoff
+    - quadrapassel
+    - swell-foop
+    - tali
+    - xboard
+
+    # Utilities
+    - bluez
+    - ppp
+    - gnome-orca
+    - gnome-accessibility-themes
+    - vino
+    - espeak-data
+    - libespeak1
+    - icedove
+    - thunderbird
+    - totem
+    - totem-common
+    - totem-plugins
+    - rhythmbox
+
+    # Vendor rubbish
+    - unity-webapps-common
 
 - name: Install ag
   apt:
@@ -30,13 +77,24 @@
   sudo: true
   when: ansible_distribution == 'Debian' or (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int > 12)
 
+- name: Ensure my user exists, is a sudoer, and has zsh as default shell
+  user:
+    name: 'martinfoot'
+    shell: '/usr/bin/zsh'
+    state: 'present'
+    groups: 'sudo'
+  sudo: true
+
 - name: Clone my dotfiles repository (SSH)
   git:
-    repo: git@github.com:mfoo/dotfiles.git
-    dest: ~/repositories/dotfiles
+    repo: 'git@github.com:mfoo/dotfiles.git'
+    dest: '~/repositories/dotfiles'
     accept_hostkey: yes
+    clone: yes
   register: dotfiles_repo
-  when: lookup('env','TRAVIS') is not defined
+  sudo: yes
+  sudo_user: 'martinfoot'
+  when: lookup('env','TRAVIS') == '' # For some reason using 'is undefined' does not work here.
 
 - name: Clone my dotfiles repository (HTTPS)
   git:
@@ -44,23 +102,29 @@
     dest: ~/repositories/dotfiles
     accept_hostkey: yes
   register: dotfiles_repo
-  when: lookup('env','TRAVIS')
-
-- name: Clone the gmarik/Vundle repository
-  git:
-    repo: https://github.com/gmarik/Vundle.vim.git
-    dest: ~/repositories/dotfiles/.vim/bundle/Vundle.vim
+  when: lookup('env','TRAVIS') != ''
+  sudo: yes
+  sudo_user: 'martinfoot'
+#
+#- name: Clone the gmarik/Vundle repository
+#  git:
+#    repo: https://github.com/gmarik/Vundle.vim.git
+#    dest: ~/repositories/dotfiles/.vim/bundle/Vundle.vim
 
 - name: Find all dotfiles
   shell: "find ~/repositories/dotfiles -name '.*' -not -name '.git' -maxdepth 1"
   when: dotfiles_repo.changed
   register: dotfiles
+  sudo: yes
+  sudo_user: 'martinfoot'
 
 - name: Find and delete conflicting dotfiles that are not symlinks
   shell: "find ~/ -maxdepth 1 -name {{ item | regex_replace('.*/dotfiles/', '') }} -type f
           -delete"
   with_items: dotfiles.stdout_lines
   when: dotfiles_repo.changed
+  sudo: yes
+  sudo_user: 'martinfoot'
 
 - name: Symlink all dotfiles into ~/
   file:
@@ -69,39 +133,39 @@
     state: link
   with_items: dotfiles.stdout_lines
   when: dotfiles_repo.changed
-
-- name: Set my default shell to zsh
-  user:
-    name: martin
-    shell: /usr/bin/zsh
   sudo: yes
+  sudo_user: 'martinfoot'
 
 - name: Clone oh-my-zsh
   git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git
     dest: ~/.oh-my-zsh
+  sudo: yes
+  sudo_user: 'martinfoot'
 
 - name: Ensure ~/bin exists
   file:
     path: ~/bin
     state: directory
+  sudo: yes
+  sudo_user: 'martinfoot'
 
-- name: Ensure ~/.fonts exists
-  file:
-    path: ~/.fonts
-    state: directory
-
-- name: Clone the Powerline Fonts repository
-  git:
-    repo: https://github.com/powerline/fonts.git
-    dest: ~/repositories/powerline-fonts
-    accept_hostkey: yes
-  register: powerline_fonts_repo
-
-- name: Copy the fonts to ~/.fonts
-  shell: find ~/repositories/powerline-fonts -type f -name '*.[o,t]tf' -exec cp {} ~/.fonts \;
-  when: powerline_fonts_repo.changed
-
-- name: Update the font cache
-  command: fc-cache -f ~/.fonts
-  when: powerline_fonts_repo.changed
+#- name: Ensure ~/.fonts exists
+#  file:
+#    path: ~/.fonts
+#    state: directory
+#
+#- name: Clone the Powerline Fonts repository
+#  git:
+#    repo: https://github.com/powerline/fonts.git
+#    dest: ~/repositories/powerline-fonts
+#    accept_hostkey: yes
+#  register: powerline_fonts_repo
+#
+#- name: Copy the fonts to ~/.fonts
+#  shell: find ~/repositories/powerline-fonts -type f -name '*.[o,t]tf' -exec cp {} ~/.fonts \;
+#  when: powerline_fonts_repo.changed
+#
+#- name: Update the font cache
+#  command: fc-cache -f ~/.fonts
+#  when: powerline_fonts_repo.changed

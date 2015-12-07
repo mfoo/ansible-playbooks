@@ -7,12 +7,9 @@
   sudo: true
   with_items:
   - gdb
-  - gtk2-engines-pixbuf
-  - libboost-all-dev
+  #- libboost-all-dev
   - liblog4cplus-dev
   - libmysqlclient-dev
-  - libqt4-dev
-  - libqtwebkit-dev
   - libsqlite3-dev
   - libv8-dev
   - libxerces-c3.1
